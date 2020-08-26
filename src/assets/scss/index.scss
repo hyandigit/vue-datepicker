@@ -16,6 +16,23 @@ $widthCell: 35px;
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: #aaaaaa;
+    display: flex;
+
+    .name{
+      flex: 80%;
+    }
+    .prev,.next{
+      cursor: pointer;
+      &:hover{
+        color: black;
+      }
+    }
+    .prev{
+      flex: 5%;
+    }
+    .next{
+      flex: 5%;
+    }
   }
 
   .weeks{
