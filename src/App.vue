@@ -6,7 +6,7 @@
 
 <script>
 
-import DatePicker from "./components/datePicker";
+import DatePicker from "./components/index";
 import '@/assets/scss/index.scss';
 export default {
   name: 'App',

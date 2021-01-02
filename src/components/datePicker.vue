@@ -1,9 +1,9 @@
 <template>
     <div class="datepicker">
         <div class="month-name">
-            <span class="prev" v-on:click="onChangeMonth(-1)">&#60;&#60;</span>
+            <span v-show="!(show & 0)" class="prev" v-on:click="onChangeMonth(-1)">&#60;&#60;</span>
             <span class="name">{{monthNames[currentDate.getMonth()]}}</span>
-            <span class="next" v-on:click="onChangeMonth(1)">&#62;&#62;</span></div>
+            <span v-show="!(show & 1)" class="next" v-on:click="onChangeMonth(1)">&#62;&#62;</span></div>
         <div class="weeks">
             <div class="week-day-name" v-for="week in weeks" :key="week">{{weekNamesShort[week]}}</div>
         </div>
@@ -22,11 +22,19 @@
 <script>
     import Day from "./day";
     export default {
-        name: "datePicker",
+        name: "month",
         components: {Day},
         props: {
-            date:{
-                type: Date,
+            //биты отображения
+            //какие элементы календаря скрывать
+            // 0 - Стрелка переключения месяца влево
+            // 1- Стрелка переключения месяца вправо
+            show:{
+                type: Number,
+                default: () => 0
+            },
+            date:{ //дата месяца который будет отображатся
+                type: Date, 
                 default: () => (new Date)
             },
             weekNames:{
@@ -80,6 +88,10 @@
             multiple:{
                 type: Boolean,
                 default: () => false
+            },
+            markedDate:{
+                type: Array,
+                default: () => []
             }
         },
         data()
@@ -111,6 +123,9 @@
             {
                 let date = new Date(this.currentDate.getTime());
                 date.setDate(1);
+                if(date.getDay() == 0){
+                    date.setDate(date.getDate() - 7);
+                }
                 date.setDate((date.getDate() - date.getDay()) + 1); // +1 смещаем отрисувку дней на один чтобы старт недели был понедельник
                 return date;
             },
@@ -118,17 +133,16 @@
             {
                 let count = 0;
                 let date = new Date(this.currentDate.getTime());
-                date.setDate(1);
-                count += date.getDay();
                 date.setMonth(date.getMonth() + 1);
                 date.setDate(0);
-                count += date.getDate() + (7 - (date.getDay() + 1));
+                date.setDate(date.getDate() + (7 - (date.getDay())));
+                count = (date.getTime() - this.startDate.getTime()) / 86400000;
                 return count;
             },
             listDays() //массив дней календаря
             {
                 let data = [];
-                for(let i = 0; i < this.numberDays; i++){
+                for(let i = 0; i <= this.numberDays; i++){
                     data.push(new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate() + i));
                 }
         
