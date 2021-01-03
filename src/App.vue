@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="vue-datepicker">
     <date-picker></date-picker>
   </div>
 </template>
@@ -9,7 +9,7 @@
 import DatePicker from "./components/index";
 import '@/assets/scss/index.scss';
 export default {
-  name: 'App',
+  name: 'vue-datepicker',
   components: {
     DatePicker
 
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style>
-#app {
+#vue-datepicker {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

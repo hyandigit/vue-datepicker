@@ -1,9 +1,17 @@
 $widthCell: 35px;
 
+.calendars{
+  display: flex;
+  flex-basis: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .datepicker{
   display: flex;
   flex-direction: column;
   width: 300px;
+  flex: 300px;
   position: relative;
   margin-right: 10px;
   border-left: solid 1px #e3e3e3;
@@ -38,10 +46,10 @@ $widthCell: 35px;
   .weeks{
     display: flex;
     flex-direction: row;
-    flex: auto;
     position: relative;
     justify-content: center;
     border-right: solid 1px #e3e3e3;
+    border-bottom: solid 1px #e3e3e3;
     .week-day-name{
       flex: auto;
       padding: 5px;
@@ -59,16 +67,16 @@ $widthCell: 35px;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex: 0 0 13.95%;
+      flex: 0 0 13.96%;
       position: relative;
       float: left;
       height: 32px;
       text-align: center;
-      border-top: solid 1px #e3e3e3;
+      border-bottom: solid 1px #e3e3e3;
       border-right: solid 1px #e3e3e3;
       padding-top: 3px;
       padding-bottom: 3px;
-      border-bottom: none;
+      border-top: none;
       border-left: none;
       cursor: pointer;
       -moz-user-select: none;

@@ -1,30 +1,42 @@
-<template>
-    <div>
-        <month v-for="item in countDatePicker" :key="item"
-            :date="date"></month>
-    </div>
-</template>
 <script>
 import Month from './datePicker';
 export default {
     'name': 'datePicker',
+    render(h) 
+    {
+        let childs = [];
+        let self = this;
+        for(let i = 0; i < self.countDatePicker; i++){
+            childs.push(h('month', {
+                props: {
+                    date: self.monthDate(i),
+                    'selected-date': self.selectedDate
+                },
+                on:{
+                    click: self.onClickDay
+                },
+                scopedSlots: self.$scopedSlots,
+            }));
+        }
+        return h('div', {class: 'calendars'}, childs);
+    },
     components:{
         Month
     },
     props:{
-        date: {
+        date: { //дата старта отрисовки
             type: Date,
             default: () => (new Date)
         },
-        mode: {
+        mode: { //режим календаря
             type: Number,
             default: () => 0
         },
         show:{
-                type: Number,
-                default: () => 0
+            type: Number,
+            default: () => 0
         },
-        weekNames:{
+        weekNames:{ //переводы названия дней недели
             type: Array,
             default: () => {
                 return [
@@ -38,7 +50,7 @@ export default {
                 ]
             }
         },
-        monthNames:{
+        monthNames:{ //переводы названия месяцев
             type: Array,
             default: () => {
                 return [
@@ -57,7 +69,7 @@ export default {
                 ];
             }
         },
-        weekNamesShort:{
+        weekNamesShort:{ //переводы сокращенных названий дней недели
             type: Array,
 
             default: () => {
@@ -72,17 +84,55 @@ export default {
                 ]
             }
         },
-        markedDate:{
+        markedDate:{ //дни которые необходимо отметить как выбранные
             type: Array,
             default: () => []
         },
         count:{
             type: Number,
-            default: () => 0
-        }
+            default: () => 12
+        },
+        multiple:{
+            type: Boolean,
+            default: () => true
+        },
+    },
+    data()
+    {
+        return {
+            weeks:[1,2,3,4,5,6,0],
+            selectedDate: [],
+            multipleStart: false
+        };
     },
     methods:{
-
+        onClickDay(date) //события клика по дню
+        {
+            if(!this.multiple){
+                this.$set(this.selectedDate, 0, date);
+            }else{ //диапазон выбора               
+                if(!this.multipleStart){
+                    this.selectedDate = [];
+                    this.multipleStart = true;
+                }
+                if(this.multipleStart && (this.selectedDate.length == 0)){console.log(1);
+                    this.$set(this.selectedDate, 0, date);
+                }else if(this.multipleStart && (this.selectedDate.length > 0)){console.log(3);
+                    this.$set(this.selectedDate, 1, date);
+                    this.multipleStart = false;
+                }
+            }
+            this.$emit('input', this.selectedDate);
+        },
+        monthDate(index) //начальная дата календаря
+        {
+            let date = new Date(this.date.getTime());
+            if(this.count){
+                date.setMonth(date.getMonth() + index);
+                return date;
+            }
+            return this.date;
+        }
     },
     computed:{
         countDatePicker()
@@ -100,6 +150,12 @@ export default {
             }
             return count;
         }
+    },
+    cteated()
+    {
     }
 }
 </script>
+<style scoped>
+
+</style>

@@ -1,29 +1,40 @@
-<template>
-    <div class="datepicker">
-        <div class="month-name">
-            <span v-show="!(show & 0)" class="prev" v-on:click="onChangeMonth(-1)">&#60;&#60;</span>
-            <span class="name">{{monthNames[currentDate.getMonth()]}}</span>
-            <span v-show="!(show & 1)" class="next" v-on:click="onChangeMonth(1)">&#62;&#62;</span></div>
-        <div class="weeks">
-            <div class="week-day-name" v-for="week in weeks" :key="week">{{weekNamesShort[week]}}</div>
-        </div>
-        <div class="days">
-            <day v-for="(day, index) in listDays" :key="index" 
-                :date="day" 
-                :selected-date="selectedDate"
-                :current-date="currentDate"
-                v-on:click="onClickDay(day)"
-            >
-            </day>
-        </div>
-    </div>
-</template>
-
 <script>
     import Day from "./day";
     export default {
         name: "month",
         components: {Day},
+        render(h) 
+        {
+            let self = this;
+            return h('div', {class: 'datepicker'},
+            [
+                h('span', { class: 'month-name'}, [
+                    h('span', { class: 'prev', on:{click: () => { self.onChangeMonth(-1) }}, style: 'display:' + (!(self.show & 0) ? 'initial' : 'none') }, '&#60;&#60;'),
+                    h('span', { class: 'name', on:{click: () => { self.onChangeMonth(-1) }} }, self.monthNames[self.currentDate.getMonth()]),
+                    h('span', { class: 'prev', on:{click: () => { self.onChangeMonth(1) }}, style: 'display:' + (!(self.show & 1) ? 'initial' : 'none')}, '&#62;&#62;'),
+                ]
+                ),
+                h('div', { class: 'weeks'}, self.weeks.map((week) => {
+                        return h('div', { class: 'week-day-name' }, self.weekNamesShort[week]);
+                    })
+                 ), 
+                h('div', { class: 'days'}, self.listDays.map((day) => {
+                        return h('day', { 
+                            class: 'week-day-name', 
+                            props:{ 
+                                date: day, 
+                                'selected-date': self.selectedDate, 
+                                'current-date': self.currentDate, 
+                                'marked-date': self.markedDate 
+                            }, 
+                            on:{ click: () => { self.onClickDay(day) }},
+                            scopedSlots: self.$scopedSlots, 
+                            });
+                    })
+                 ),
+            ]
+            );
+        },
         props: {
             //биты отображения
             //какие элементы календаря скрывать
@@ -85,11 +96,15 @@
                     ]
                 }
             },
-            multiple:{
+            multiple:{ //знак выбора диапазона дат
                 type: Boolean,
                 default: () => false
             },
-            markedDate:{
+            markedDate:{ //даты которые необходимо отметить как выбранное
+                type: Array,
+                default: () => []
+            },
+            selectedDate:{ // выбранная дата
                 type: Array,
                 default: () => []
             }
@@ -98,7 +113,6 @@
         {
             return {
                 weeks:[1,2,3,4,5,6,0],
-                selectedDate: [],
                 addMonthNumber: 0, //смещение месяца
             };
         },
@@ -108,10 +122,7 @@
         methods:{
             onClickDay(date) //события клика по дню
             {
-                console.log('onClickDay', this.multiple);
-                if(!this.multiple){
-                    this.$set(this.selectedDate, 0, date);
-                }
+                this.$emit('click', date);
             },
             onChangeMonth(add) //событие при смене месяца
             {

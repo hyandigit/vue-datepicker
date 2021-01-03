@@ -1,10 +1,10 @@
 {
-  "name": "datepicker",
+  "name": "vue-datepicker",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --inline-vue",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -36,9 +36,24 @@
     },
     "rules": {}
   },
+  "main": "dist/datepicker.umd.js",
+  "module": "dist/datepicker.esm.js",
+  "unpkg": "dist/datepicker.min.js",
+  "browser": {
+    "./sfc": "src/components/index.vue"
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ], 
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyandigit/vue-datepicker"
+  },
+  "keywords": [],
+  "author": "Andrey Kravets",
+  "license": "ISC",
+  "bugs": { },
+  "homepage": "https://github.com/hyandigit/vue-datepicker"
 }
