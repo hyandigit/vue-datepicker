@@ -90,11 +90,11 @@ export default {
         },
         count:{
             type: Number,
-            default: () => 12
+            default: () => 1
         },
         multiple:{
             type: Boolean,
-            default: () => true
+            default: () => false
         },
     },
     data()

@@ -9,9 +9,9 @@
             return h('div', {class: 'datepicker'},
             [
                 h('span', { class: 'month-name'}, [
-                    h('span', { class: 'prev', on:{click: () => { self.onChangeMonth(-1) }}, style: 'display:' + (!(self.show & 0) ? 'initial' : 'none') }, '&#60;&#60;'),
+                    h('span', { class: 'prev', on:{click: () => { self.onChangeMonth(-1) }}, style: 'display:' + (!(self.show & 0) ? 'initial' : 'none') }, '<<'),
                     h('span', { class: 'name', on:{click: () => { self.onChangeMonth(-1) }} }, self.monthNames[self.currentDate.getMonth()]),
-                    h('span', { class: 'prev', on:{click: () => { self.onChangeMonth(1) }}, style: 'display:' + (!(self.show & 1) ? 'initial' : 'none')}, '&#62;&#62;'),
+                    h('span', { class: 'prev', on:{click: () => { self.onChangeMonth(1) }}, style: 'display:' + (!(self.show & 1) ? 'initial' : 'none')}, '>>'),
                 ]
                 ),
                 h('div', { class: 'weeks'}, self.weeks.map((week) => {

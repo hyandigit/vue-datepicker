@@ -1,17 +1,17 @@
 $widthCell: 35px;
 
 .calendars{
-  display: flex;
+  /*display: flex;
   flex-basis: auto;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: wrap;*/
 }
 
 .datepicker{
-  display: flex;
+  display: inline-block;
   flex-direction: column;
-  width: 300px;
-  flex: 300px;
+  width: 301px;
+  flex: 301px;
   position: relative;
   margin-right: 10px;
   border-left: solid 1px #e3e3e3;
@@ -67,7 +67,7 @@ $widthCell: 35px;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex: 0 0 13.96%;
+      flex: 0 0 50px;
       position: relative;
       float: left;
       height: 32px;
@@ -84,6 +84,7 @@ $widthCell: 35px;
       -webkit-user-select: none;
       user-select: none;
       cursor: pointer;
+      background-color: white;
 
       &.fill{
         background-color: #f1f1f1;
