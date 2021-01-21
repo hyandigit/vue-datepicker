@@ -1,6 +1,6 @@
 {
   "name": "@hwt/vue-datepicker",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -36,9 +36,9 @@
     },
     "rules": {}
   },
-  "main": "dist/datepicker.umd.js",
-  "module": "dist/datepicker.esm.js",
-  "unpkg": "dist/datepicker.min.js",
+  "main": "dist/vue-datepicker.umd.js",
+  "module": "dist/vue-datepicker.esm.js",
+  "unpkg": "dist/vue-datepicker.min.js",
   "browser": {
     "./sfc": "src/components/index.vue"
   },
